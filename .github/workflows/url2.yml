@@ -1,0 +1,29 @@
+name: Collect
+
+on:
+  workflow_dispatch:
+  schedule:
+    # - cron:  '0 0/8 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Timezone
+      run: sudo timedatectl set-timezone 'Asia/Shanghai'
+    - name: git config
+      run: git config --local user.name "GitHub Actions"; git config --local user.email "actions@github.com"
+    
+    - name: Checkout private repository
+      uses: actions/checkout@v4
+      with:
+        repository: kSLAWIASCA/collect
+        token: ${{ secrets.privates }}
+        path: pwc
+
+    - name: Run test
+      run: |
+        cd pwc/
+        bash pipeline_get.sh 

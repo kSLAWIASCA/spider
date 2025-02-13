@@ -1,2 +1,2 @@
 # spider
-run test 
+only used for test 
